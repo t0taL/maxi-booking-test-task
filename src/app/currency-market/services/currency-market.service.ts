@@ -122,7 +122,7 @@ export class CurrencyMarketService {
 
   // sources
   private sourceName1(): Observable<ICurrencyItem[]> {
-    return this.apiService.get<ISourceName1CurrencyData>('daily_json.j')
+    return this.apiService.get<ISourceName1CurrencyData>('daily_json.js')
       .pipe(map((response: ISourceName1CurrencyData) => this.serverResponseAdapter.adaptFromSourceName1(response)));
   }
 
