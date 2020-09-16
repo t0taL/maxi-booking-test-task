@@ -1,9 +1,10 @@
 {
-  "name": "test-task",
-  "version": "0.0.0",
+  "name": "maxi-booking-test-task",
+  "version": "1.0.0",
+  "author": "Korneev Vitaly <t0taL90ryazan@gmail.com>",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 192.168.1.204 --port 3000",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -20,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~10.1.1",
     "@angular/router": "~10.1.1",
     "@ng-select/ng-select": "^5.0.1",
-    "rxjs": "~6.5.4",
+    "rxjs": "~6.6.3",
     "stream": "0.0.2",
     "timers": "^0.1.1",
     "tslib": "^2.0.0",
