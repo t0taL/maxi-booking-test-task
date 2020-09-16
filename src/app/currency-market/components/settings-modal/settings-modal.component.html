@@ -11,14 +11,12 @@
     </div>
 
     <div class="settings__modal-toolbar">
-      <label for="checkbox">Проверять недоступные источники</label>
-
-      <input
-        type="checkbox"
-        name="checkbox"
+      <app-checkbox
         [checked]="(unavailableSourceCheckingState$ | async)"
-        (change)="setUnavailableSourceCheckingState($event)"
+        (clickEvent)="setUnavailableSourceCheckingState($event)"
       >
+        Проверять недоступные источники
+      </app-checkbox>
     </div>
 
     <div class="settings__modal-content">

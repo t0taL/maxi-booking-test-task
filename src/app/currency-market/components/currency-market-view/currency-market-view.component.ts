@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { CurrencyMarketService } from 'app/currency-market/services/currency-market.service';
 
@@ -17,6 +18,7 @@ import { CurrencyCharCode } from 'app/currency-market/enums/currency-char-code.e
 })
 export class CurrencyMarketViewComponent implements OnInit {
   currencyItems$: Observable<ICurrencyItem[]>;
+  isCurrencyItems: boolean;
 
   filterValues: CurrencyCharCode[] = [];
   selectOptions: ISelectOption[] = [];
@@ -25,7 +27,9 @@ export class CurrencyMarketViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currencyItems$ = this.currencyMarketService.currencyItems$;
+    this.currencyItems$ = this.currencyMarketService.currencyItems$
+      .pipe(tap((currencyItems: ICurrencyItem[]) => this.isCurrencyItems = (currencyItems.length > 0)));
+
     this.selectOptions = Object.values(CurrencyCharCode).map((charCode: CurrencyCharCode) => {
       const selectOption: ISelectOption = { id: charCode, name: charCode };
       return selectOption;

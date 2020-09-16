@@ -18,7 +18,6 @@ export class IconButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.disabled)
   }
 
   click(): void {

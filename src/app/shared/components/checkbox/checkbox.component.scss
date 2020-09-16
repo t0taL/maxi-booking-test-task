@@ -1,0 +1,31 @@
+@import 'src/variables';
+@import 'src/mixins';
+
+
+.checkbox {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  @include link-button;
+
+  &__indicator {
+    display: flex;
+    height: 20px;
+    width: 20px;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $black-color;
+    border-radius: 3px;
+
+    &-inner {
+      height: 16px;
+      width: 16px;
+      border-radius: 3px;
+
+      &.checked {
+        background-color: $black-color;
+      }
+    }
+  }
+}

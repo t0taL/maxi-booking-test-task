@@ -13,7 +13,7 @@
     <app-settings-modal class="settings"></app-settings-modal>
   </div>
 
-  <div class="currency-market__content" *ngIf="(currencyItems$ | async)?.length; else loader">
+  <div class="currency-market__content">
     <app-currency-item
       *ngFor="let currencyItem of (currencyItems$ | async | currencyFilter:filterValues); trackBy: trackByFn"
       [item]="currencyItem"
@@ -21,9 +21,7 @@
     </app-currency-item>
   </div>
 
-  <ng-template #loader>
-    <div class="loader-wrapper">
-      <app-loader></app-loader>
-    </div>
-  </ng-template>
+  <div class="loader-wrapper" *ngIf="!isCurrencyItems">
+    <app-loader></app-loader>
+  </div>
 </div>

@@ -9,7 +9,7 @@ import { ICurrencyItem } from '../models/currency-item.model';
 import { ISourceName1CurrencyData } from '../models/source-response-models/source-name-1-currency-data.model';
 import { ISourceItem } from '../interfaces/source-item.interface';
 
-import { CurrencyChangeOrderActions } from '../enums/currency-change-order-actions.enum';
+import { SourceOrderActions } from '../enums/source-order-actions.enum';
 
 
 const initialSourceItemsList: ISourceItem[] = [
@@ -32,10 +32,6 @@ export class CurrencyMarketService {
   }
 
   // current source actions
-  private getCurrentSourceItem(): ISourceItem {
-    return this.currentSource$.getValue();
-  }
-
   private setCurrentSourceItem(sourceItem: ISourceItem): void {
     return this.currentSource$.next(sourceItem);
   }
@@ -49,16 +45,16 @@ export class CurrencyMarketService {
     this.sourceItemsList$.next(updatedSourceList);
   }
 
-  changeSourcesOrder(itemIndex: number, direction: CurrencyChangeOrderActions): void {
+  changeSourcesOrder(itemIndex: number, direction: SourceOrderActions): void {
     const sourceItemsList: ISourceItem[] = this.getSourceItemsList();
     const targetSource: ISourceItem = sourceItemsList[itemIndex];
 
     switch (direction) {
-      case CurrencyChangeOrderActions.UP:
+      case SourceOrderActions.UP:
         sourceItemsList[itemIndex] = sourceItemsList[itemIndex - 1];
         sourceItemsList[itemIndex - 1] = targetSource;
         break;
-      case CurrencyChangeOrderActions.DOWN:
+      case SourceOrderActions.DOWN:
         sourceItemsList[itemIndex] = sourceItemsList[itemIndex + 1];
         sourceItemsList[itemIndex + 1] = targetSource;
         break;
@@ -69,10 +65,6 @@ export class CurrencyMarketService {
   }
 
   // unavailable source checking state actions
-  private getUnavailableSourceCheckingState(): boolean {
-    return this.unavailableSourceCheckingState$.getValue();
-  }
-
   setUnavailableSourceCheckingState(state: boolean): void {
     this.unavailableSourceCheckingState$.next(state);
   }
@@ -82,18 +74,18 @@ export class CurrencyMarketService {
     return timer(nextSourceDelay || 0, 10000)
       .pipe(
         takeUntil(this.stopStreamEvent),
-        withLatestFrom(this.currentSource$),
-        mergeMap(([_, currentSource]) => this.execute(currentSource)
-          .pipe(
-            map((response: ICurrencyItem[]) => this.streamSuccessHandler(response)),
-            catchError((error) => this.streamFailHandler())
-          )
-        )
+        withLatestFrom(this.currentSource$, this.sourceItemsList$, this.unavailableSourceCheckingState$),
+        mergeMap(([_, currentSource, sourceItemsList, unavailableSourceCheckingState]: [number, ISourceItem, ISourceItem[], boolean]) => {
+          return this.execute(currentSource, sourceItemsList)
+            .pipe(
+              map((response: ICurrencyItem[]) => this.streamSuccessHandler(response, unavailableSourceCheckingState)),
+              catchError((error) => this.streamFailHandler(currentSource, sourceItemsList))
+            );
+        })
       );
   }
 
-  private execute(currentSourceItem: ISourceItem): Observable<ICurrencyItem[]> {
-    const sourceItemsList: ISourceItem[] = this.getSourceItemsList();
+  private execute(currentSourceItem: ISourceItem, sourceItemsList: ISourceItem[]): Observable<ICurrencyItem[]> {
     const updatedSourceList: ISourceItem[] = [];
 
     sourceItemsList.forEach((sourceItem: ISourceItem) => {
@@ -106,20 +98,17 @@ export class CurrencyMarketService {
   }
 
   // handlers
-  private streamSuccessHandler(response: ICurrencyItem[]): ICurrencyItem[] {
-    const unavailableSourceCheckingState: boolean = this.getUnavailableSourceCheckingState();
-
+  private streamSuccessHandler(response: ICurrencyItem[], unavailableSourceCheckingState: boolean): ICurrencyItem[] {
     if (unavailableSourceCheckingState) {
       const sourceList: ISourceItem[] = this.getSourceItemsList();
       this.setCurrentSourceItem(sourceList[0]);
     }
+
     return response;
   }
 
-  private streamFailHandler(): Observable<ICurrencyItem[]> {
+  private streamFailHandler(currentSourceItem: ISourceItem, sourceItemsList: ISourceItem[]): Observable<ICurrencyItem[]> {
     this.stopStreamEvent.next();
-    const currentSourceItem: ISourceItem = this.getCurrentSourceItem();
-    const sourceItemsList: ISourceItem[] = this.getSourceItemsList();
     const currentSourceIdx: number = sourceItemsList.findIndex((sourceItem: ISourceItem) => sourceItem.name === currentSourceItem.name);
     const nextSourceIdx = currentSourceIdx + 1;
 
@@ -138,8 +127,8 @@ export class CurrencyMarketService {
       .pipe(map((response: ISourceName1CurrencyData) => this.serverResponseAdapter.adaptFromSourceName1(response)));
   }
 
-  private sourceName2(): Observable<any> {
-    return this.apiService.getXML<any>('daily_utf8.xml')
+  private sourceName2(): Observable<ICurrencyItem[]> {
+    return this.apiService.getXML<string>('daily_utf8.xml')
       .pipe(map((response: string) => this.serverResponseAdapter.adaptFromSourceName2(response)));
   }
 }

@@ -7,7 +7,7 @@ import { CurrencyMarketService } from 'app/currency-market/services/currency-mar
 
 import { ISourceItem } from 'app/currency-market/interfaces/source-item.interface';
 
-import { CurrencyChangeOrderActions } from 'app/currency-market/enums/currency-change-order-actions.enum';
+import { SourceOrderActions } from 'app/currency-market/enums/source-order-actions.enum';
 
 
 @Component({
@@ -39,16 +39,15 @@ export class SettingsModalComponent implements OnInit {
     this.modalIsOpened = !this.modalIsOpened;
   }
 
-  setUnavailableSourceCheckingState(event: any): void {
-    const value: boolean = event.target.checked;
-    this.currencyMarketService.setUnavailableSourceCheckingState(value);
+  setUnavailableSourceCheckingState(state: boolean): void {
+    this.currencyMarketService.setUnavailableSourceCheckingState(state);
   }
 
   moveItemUp(itemIndex: number): void {
-    this.currencyMarketService.changeSourcesOrder(itemIndex, CurrencyChangeOrderActions.UP);
+    this.currencyMarketService.changeSourcesOrder(itemIndex, SourceOrderActions.UP);
   }
 
   moveItemDown(itemIndex: number): void {
-    this.currencyMarketService.changeSourcesOrder(itemIndex, CurrencyChangeOrderActions.DOWN);
+    this.currencyMarketService.changeSourcesOrder(itemIndex, SourceOrderActions.DOWN);
   }
 }

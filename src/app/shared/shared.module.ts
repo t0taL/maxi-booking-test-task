@@ -10,6 +10,7 @@ import { SelectComponent } from './components/select/select.component';
 import { ButtonComponent } from './components/button/button.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     SelectComponent,
     ButtonComponent,
     IconButtonComponent,
-    LoaderComponent
+    LoaderComponent,
+    CheckboxComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     SelectComponent,
     ButtonComponent,
     IconButtonComponent,
-    LoaderComponent
+    LoaderComponent,
+    CheckboxComponent
   ]
 })
 export class SharedModule {
