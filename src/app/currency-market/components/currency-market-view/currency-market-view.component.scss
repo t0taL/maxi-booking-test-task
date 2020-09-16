@@ -24,11 +24,9 @@
   }
 
   &__content {
-    display: flex;
+    display: grid;
     width: inherit;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .loader-wrapper {
@@ -37,21 +35,18 @@
   }
 }
 
-@media screen and (max-width: 665px) {
+@media screen and (max-width: 975px) {
   .currency-market {
     &__content {
-      justify-content: space-around;
+      grid-template-columns: 1fr 1fr;
     }
   }
 }
 
-@media screen and (min-width: 975px) {
+@media screen and (max-width: 665px) {
   .currency-market {
     &__content {
-      &::after {
-        content: "";
-        flex: auto;
-      }
+      grid-template-columns: 1fr;
     }
   }
 }
