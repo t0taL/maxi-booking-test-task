@@ -37,16 +37,12 @@ export class CurrencyMarketService {
   }
 
   // source items list actions
-  private getSourceItemsList(): ISourceItem[] {
-    return this.sourceItemsList$.getValue();
-  }
-
   private updateSourceList(updatedSourceList: ISourceItem[]): void {
     this.sourceItemsList$.next(updatedSourceList);
   }
 
   changeSourcesOrder(itemIndex: number, direction: SourceOrderActions): void {
-    const sourceItemsList: ISourceItem[] = this.getSourceItemsList();
+    const sourceItemsList: ISourceItem[] = this.sourceItemsList$.getValue();
     const targetSource: ISourceItem = sourceItemsList[itemIndex];
 
     switch (direction) {
@@ -78,7 +74,7 @@ export class CurrencyMarketService {
         mergeMap(([_, currentSource, sourceItemsList, unavailableSourceCheckingState]: [number, ISourceItem, ISourceItem[], boolean]) => {
           return this.execute(currentSource, sourceItemsList)
             .pipe(
-              map((response: ICurrencyItem[]) => this.streamSuccessHandler(response, unavailableSourceCheckingState)),
+              map((response: ICurrencyItem[]) => this.streamSuccessHandler(response, sourceItemsList, unavailableSourceCheckingState)),
               catchError((error) => this.streamFailHandler(currentSource, sourceItemsList))
             );
         })
@@ -98,10 +94,13 @@ export class CurrencyMarketService {
   }
 
   // handlers
-  private streamSuccessHandler(response: ICurrencyItem[], unavailableSourceCheckingState: boolean): ICurrencyItem[] {
+  private streamSuccessHandler(
+    response: ICurrencyItem[],
+    sourceItemsList: ISourceItem[],
+    unavailableSourceCheckingState: boolean
+  ): ICurrencyItem[] {
     if (unavailableSourceCheckingState) {
-      const sourceList: ISourceItem[] = this.getSourceItemsList();
-      this.setCurrentSourceItem(sourceList[0]);
+      this.setCurrentSourceItem(sourceItemsList[0]);
     }
 
     return response;
@@ -123,7 +122,7 @@ export class CurrencyMarketService {
 
   // sources
   private sourceName1(): Observable<ICurrencyItem[]> {
-    return this.apiService.get<ISourceName1CurrencyData>('daily_json.js')
+    return this.apiService.get<ISourceName1CurrencyData>('daily_json.j')
       .pipe(map((response: ISourceName1CurrencyData) => this.serverResponseAdapter.adaptFromSourceName1(response)));
   }
 
