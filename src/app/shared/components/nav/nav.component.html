@@ -1,0 +1,10 @@
+<nav class="nav">
+  <div
+    *ngFor="let navItem of navItems"
+    [routerLink]="[ navItem.path ]"
+    routerLinkActive="active"
+    class="nav__item"
+  >
+    <span>{{ navItem.name }}</span>
+  </div>
+</nav>

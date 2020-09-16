@@ -1,0 +1,21 @@
+<div class="settings-item">
+  <div class="settings-item__indicator">
+    <span [style.color]="inUse ? '#66cda3' : '#dddddd'">&#9900;</span>
+  </div>
+
+  <div class="settings-item__info">
+    <span>{{ sourceIndex + 1 }}</span>
+
+    <span>{{ sourceName }}</span>
+  </div>
+
+  <div class="settings-item__actions">
+    <app-icon-button [disabled]="sourceIndex === 0" (clickEvent)="moveUp()">
+      &#8679;
+    </app-icon-button>
+
+    <app-icon-button [disabled]="sourceIndex + 1 === maxSources" (clickEvent)="moveDown()">
+      &#8681;
+    </app-icon-button>
+  </div>
+</div>

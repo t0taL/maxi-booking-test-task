@@ -1,0 +1,37 @@
+<div class="settings">
+  <app-button (clickEvent)="toggleModal()">Настройки</app-button>
+
+  <div class="settings__modal" *ngIf="modalIsOpened" [@settingsModalAnimation]>
+    <div class="settings__modal-header">
+      <span>Доступные источники</span>
+
+      <app-icon-button class="cancel-button" (clickEvent)="toggleModal()">
+        &#10006;
+      </app-icon-button>
+    </div>
+
+    <div class="settings__modal-toolbar">
+      <label for="checkbox">Проверять недоступные источники</label>
+
+      <input
+        type="checkbox"
+        name="checkbox"
+        [checked]="(unavailableSourceCheckingState$ | async)"
+        (change)="setUnavailableSourceCheckingState($event)"
+      >
+    </div>
+
+    <div class="settings__modal-content">
+      <app-settings-item
+        *ngFor="let source of (sourceList$ | async); index as i; trackBy: trackByFn"
+        [sourceName]="source.name"
+        [sourceIndex]="i"
+        [inUse]="source.inUse"
+        [maxSources]="(sourceList$ | async)?.length"
+        (moveUpEvent)="moveItemUp($event)"
+        (moveDownEvent)="moveItemDown($event)"
+      >
+      </app-settings-item>
+    </div>
+  </div>
+</div>

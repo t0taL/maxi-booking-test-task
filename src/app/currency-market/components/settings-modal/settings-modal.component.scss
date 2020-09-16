@@ -1,0 +1,46 @@
+@import 'src/variables';
+
+
+.settings {
+  position: relative;
+
+  &__modal {
+    position: absolute;
+    top: 50px;
+    right: -10px;
+    width: 370px;
+    border-radius: 3px;
+    background-color: $white-color;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    overflow: hidden;
+
+    &-header {
+      position: relative;
+      display: flex;
+      height: 50px;
+      align-items: center;
+      justify-content: center;
+      color: $white-color;
+      background-color: $black-color;
+
+      .cancel-button {
+        position: absolute;
+        right: 15px;
+      }
+    }
+
+    &-toolbar {
+      display: flex;
+      height: 35px;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    &-content {
+      padding: 10px;
+      min-height: 250px;
+      max-height: 400px;
+      overflow: auto;
+    }
+  }
+}

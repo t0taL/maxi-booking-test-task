@@ -1,0 +1,9 @@
+@mixin link-button {
+  user-select: none; 
+  cursor: pointer;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}

@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  height: inherit;
+  width: inherit;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+  -webkit-box-reflect: below -12px linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+
+  span {
+    position: relative;
+    display: inline-block;
+    color: #000000;
+    font-size: 33px;
+    line-height: 50px;
+    text-transform: uppercase;
+    animation: animate 1.5s ease-in-out infinite;
+    animation-delay: calc(100ms * var(--i))
+  }
+}
+
+@keyframes animate {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  20% {
+    transform: translateY(-20px);
+  }
+  40% {
+    transform: translateY(0px);
+  }
+}

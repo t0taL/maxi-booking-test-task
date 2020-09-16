@@ -1,0 +1,15 @@
+@import 'src/mixins';
+
+
+button {
+  border-width: 0;
+  border-radius: 3px;
+  outline: none;
+  font-size: 20px;
+  @include link-button;
+
+  &:disabled {
+    background-color: #dddddd !important;
+    cursor: unset;
+  }
+}

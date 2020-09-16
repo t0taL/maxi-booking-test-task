@@ -1,0 +1,16 @@
+@import 'src/mixins';
+
+
+button {
+  padding: 10px;
+  border-width: 0;
+  border-radius: 3px;
+  outline: none;
+  font-size: 16px;
+  @include link-button;
+
+  &:disabled {
+    background-color: #dddddd !important;
+    cursor: unset;
+  }
+}

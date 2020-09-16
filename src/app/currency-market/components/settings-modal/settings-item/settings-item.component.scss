@@ -1,0 +1,40 @@
+@import 'src/variables';
+
+
+.settings-item {
+  display: flex;
+  height: 40px;
+  padding: 0 10px;
+  margin: 5px 0;
+  align-items: center;
+  border-top: 1px solid $gray-color;
+  border-bottom: 1px solid $gray-color;
+
+  &__indicator {
+    display: flex;
+    height: inherit;
+    width: 16px;
+    align-items: center;
+
+    span {
+      line-height: 1px;
+    }
+  }
+
+  &__info {
+    span:first-child {
+      display: inline-block;
+      width: 20px;
+    }
+  }
+
+  &__actions {
+    margin-left: auto;
+
+    & > * {
+      &:not(:first-child) {
+        margin-left: 5px;
+      }
+    }
+  }
+}

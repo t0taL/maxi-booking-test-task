@@ -1,0 +1,52 @@
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  position: relative;
+
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+  }
+  
+  .circle-1 {
+    height: 60px;
+    width: 60px;
+    top: -20px;
+    left: -20px;
+    background-color: #9191914b;
+    animation: circle-1 1.5s ease-in-out infinite;
+  }
+  
+  .circle-2 {
+    height: 20px;
+    width: 20px;
+    background-color: #7f7f7f41;
+    animation: circle-2 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes circle-1 {
+  0%, 100% {
+  }
+  50% {
+    height: 20px;
+    width: 20px;
+    transform: translateY(20px) translateX(20px);
+  }
+}
+
+@keyframes circle-2 {
+  0%, 100% {
+  }
+  50% {
+    height: 60px;
+    width: 60px;
+    transform: translateY(-20px) translateX(-20px);
+  }
+}

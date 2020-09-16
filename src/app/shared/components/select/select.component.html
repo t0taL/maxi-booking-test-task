@@ -1,0 +1,11 @@
+<ng-select
+  [items]="items"
+  bindLabel="name"
+  bindValue="id"
+  [multiple]="multiple"
+  [placeholder]="placeholder"
+  (add)="add($event)"
+  (remove)="remove($event.value)"
+  (clear)="clear()"
+>
+</ng-select>

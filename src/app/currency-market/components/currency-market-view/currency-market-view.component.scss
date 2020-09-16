@@ -1,0 +1,57 @@
+@import 'src/variables';
+
+
+:host {
+  height: 100%;
+  width: inherit;
+}
+
+.currency-market {
+  height: inherit;
+  width: inherit;
+
+  &__actions {
+    display: flex;
+    height: 60px;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $black-color;
+
+    .settings {
+      margin-left: 10px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    width: inherit;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .loader-wrapper {
+    height: calc(100% - 60px);
+    width: inherit;
+  }
+}
+
+@media screen and (max-width: 665px) {
+  .currency-market {
+    &__content {
+      justify-content: space-around;
+    }
+  }
+}
+
+@media screen and (min-width: 975px) {
+  .currency-market {
+    &__content {
+      &::after {
+        content: "";
+        flex: auto;
+      }
+    }
+  }
+}

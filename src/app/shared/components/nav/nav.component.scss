@@ -1,0 +1,31 @@
+@import 'src/variables';
+@import 'src/mixins';
+
+
+:host {
+  height: inherit;
+}
+
+.nav {
+  display: flex;
+  height: inherit;
+  align-items: center;
+
+  &__item {
+    display: flex;
+    height: inherit;
+    padding: 0 10px;
+    align-items: center;
+    transition: 300ms;
+    @include link-button;
+
+    &.active {
+      color: $black-color;
+      background-color: $white-color;
+    }
+
+    span {
+      text-align: center;
+    }
+  }
+}
